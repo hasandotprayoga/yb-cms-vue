@@ -1,9 +1,14 @@
 <template>
   <div>
-    <b-table
-      :data="data"
-      :columns="columns">
-      <b-input
+      <b-table
+        :columns="columns"
+        :data="data"
+        ref="table"
+        detailed
+        detail-key="id"
+        @details-open="(row, index) => $buefy.toast.open(`Expanded ${row.id}`)"
+        :show-detail-icon="showDetailIcon">
+        <b-input
           v-if="!props.column.numeric"
           slot="searchable"
           slot-scope="props"
@@ -14,7 +19,9 @@
       
         <template slot-scope="props">
           <b-table-column field="orderId" width="40">
+            <a @click="toggle(props.row)"> 
               {{ props.row.orderId }}
+            </a>
           </b-table-column>
           <b-table-column field="createdAt">
               <span class="tag is-success">
@@ -27,12 +34,31 @@
           <b-table-column field="amount" numeric>
               {{ new Intl.NumberFormat('id-ID', { maximumSignificantDigits: 3 }).format(props.row.amount) }}
           </b-table-column>
-          <b-table-column field="note">
-              {{ props.row.note }}
+          <b-table-column field="description">
+              {{ props.row.description }}
           </b-table-column>
           <b-table-column field="action">
-              <b-button type="is-primary" @click="setPaid">Set Paid</b-button>
+              <b-button type="is-primary" @click="setPaid(props.row.id)">Set Paid</b-button>
           </b-table-column>
+        </template>
+
+        <template slot="detail" slot-scope="props">
+            <article class="media">
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                          <strong>{{ props.row.customerData.name }} | {{props.row.customerData.phone}}</strong>
+                          <br>
+                          <small>{{ props.row.customerData.email }}</small>
+                            <small>31m</small>
+                            <br>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Proin ornare magna eros, eu pellentesque tortor vestibulum ut.
+                            Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+                        </p>
+                    </div>
+                </div>
+            </article>
         </template>
     </b-table>
   </div>
@@ -66,7 +92,7 @@ export default {
                 searchable: true,
             },
             {
-                field: 'note',
+                field: 'description',
                 label: 'Note',
                 searchable: true,
             },
@@ -74,12 +100,16 @@ export default {
               field: 'action',
               label: 'Action'
             }
-        ]
+        ],
+        showDetailIcon: false
     }
   },
   methods: {
-    setPaid: function() {
-      alert('test')
+    setPaid: function(id) {
+      alert(id)
+    },
+    toggle(row) {
+      this.$refs.table.toggleDetails(row)
     }
   },
   mounted () {
