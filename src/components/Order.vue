@@ -49,12 +49,7 @@
                         <p>
                           <strong>{{ props.row.customerData.name }} | {{props.row.customerData.phone}}</strong>
                           <br>
-                          <small>{{ props.row.customerData.email }}</small>
-                            <small>31m</small>
-                            <br>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Proin ornare magna eros, eu pellentesque tortor vestibulum ut.
-                            Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+                          {{ props.row.customerData.address }}, {{ props.row.customerData.subdistrict }}, {{ props.row.customerData.city }}, {{ props.row.customerData.province }} - {{ props.row.customerData.postCode }}
                         </p>
                     </div>
                 </div>
