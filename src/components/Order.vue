@@ -32,7 +32,7 @@
               {{ props.row.bank }}
           </b-table-column>
           <b-table-column field="amount" numeric>
-              {{ new Intl.NumberFormat('id-ID', { maximumSignificantDigits: 3 }).format(props.row.amount) }}
+              {{ new Intl.NumberFormat('id-ID').format(props.row.amount) }}
           </b-table-column>
           <b-table-column field="description">
               {{ props.row.description }}
